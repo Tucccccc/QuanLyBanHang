@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">  
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="bootstrap.min.css" th:href="@{bootstrap.min.css}"/>  
+</head>
+<form th:action="@{/testLogout}" method="post"> <input type="submit" value="Sign Out" /> </form>
+<body>
+
+<div class="col-3"></div>  
+<div class="container col-6">  
+    <h1>New Product</h1>  
+    <div class="col-md-auto">  
+        <form th:object="${product}" action="/save/saveProduct" method="post" enctype="multipart/form-data">  
+             <div>  
+                <label th:text="ID" th:for="id"></label>  
+                <input type="text" th:field="*{id}" class="form-control" placeholder="ID"/>  
+            </div> 
+            <div style="clear: both; display: block; height: 10px"></div>  
+            <div>  
+                <label th:text="Name" th:for="name"></label>  
+                <input type="text" th:field="*{name}" class="form-control" placeholder="Name"/>  
+            </div>  
+            <div style="clear: both; display: block; height: 10px"></div>  
+            <div>  
+                <label th:text="Brand" th:for="brand"></label>  
+                <input type="text" th:field="*{brand}" class="form-control" placeholder="Brand"/>  
+            </div>  
+            <div style="clear: both; display: block; height: 10px"></div>  
+            <div>  
+                <label th:text="MadeIn" th:for="madein"></label>  
+                <input type="text" th:field="*{madein}" class="form-control" placeholder="MadeIn"/>  
+            </div>  
+            <div style="clear: both; display: block; height: 10px"></div>  
+             <div>  
+                <label th:text="Price" th:for="price"></label>  
+                <input type="text" th:field="*{price}" class="form-control" placeholder="Price"/>  
+            </div>  
+            <div style="clear: both; display: block; height: 10px"></div>  
+            
+            <select th:field="*{category}">
+            	<option th:each="category : ${listCategories}" th:value="${category.name}" th:text="${category.name}"></option>
+            </select>
+             <div style="clear: both; display: block; height: 10px"></div>  
+            
+            <script>
+                    function chooseFile(fileInput){
+                      if (fileInput.files && fileInput.files[0]){
+                        var reader = new FileReader();
+
+                        reader.onload=function (e){
+                          $("#image").attr('src', e.target.result);
+                        }
+
+                        reader.readAsDataURL(fileInput.files[0]);
+                      }
+                    }
+             </script>
+             
+             <img  id="image" th:src="${product.image !=null ? '/admin/products/images/' + product.image : 'images/noimage.jpg'}" width="50%" 
+                   src="/images/noimage.png" alt="Select image">
+                <div class="form-group">
+                  <label for="productImage">Image File</label>
+                  <input type="file" class="form-control" name="imageFile" id="productImage" aria-describedby="productImagehelpId" placeholder="Image File">
+                </div>
+                
+            <input type="submit" class="btn btn-success" value="Save"/>  
+        </form>  
+    </div>  
+</div>  
+
+</body>
+</html>
